@@ -20,6 +20,11 @@ write_debian_compat() {
     echo "10" >> debian/compat
 }
 
+write_debian_source_format() {
+    mkdir -p debian/source
+    echo "3.0 (quilt)" >> debian/source/format
+}
+
 write_debian_copyright() {
     echo "Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/" >> debian/copyright
     echo "Upstream-Name: Nerd Fonts" >> debian/copyright
@@ -164,6 +169,7 @@ setup() {
     write_debian_control_start
     write_debian_rules
     write_debian_compat
+    write_debian_source_format
 }
 
 generate_debian_package() {
