@@ -1,3 +1,10 @@
+fonts-nerd-fonts (2.1.0-2) focal; urgency=medium
+
+  [ Ken Gilmer ]
+  * Remove noto as assets are too large for github policy
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Sat, 01 Jan 2022 09:37:40 -0800
+
 fonts-nerd-fonts (2.1.0) focal; urgency=medium
 
   * Automated release

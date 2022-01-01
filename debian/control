@@ -221,12 +221,6 @@ Multi-Arch: foreign
 Depends: ${misc:Depends}
 Description: nerd-fonts mplus
 
-Package: fonts-nerd-font-noto
-Architecture: all
-Multi-Arch: foreign
-Depends: ${misc:Depends}
-Description: nerd-fonts noto
-
 Package: fonts-nerd-font-opendyslexic
 Architecture: all
 Multi-Arch: foreign
