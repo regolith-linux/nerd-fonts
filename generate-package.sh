@@ -181,7 +181,7 @@ generate_debian_package() {
         ASSET_FILENAME=$(echo $release_asset | jq -r '.name')
         ASSET_URL=$(echo $release_asset | jq -r '.browser_download_url')
 
-        # echo $ASSET_NAME $ASSET_URL
+        # FIXME - Need ability to exclude some fonts due to size, eg 'Noto'
 
         # Append to control file
         ASSET_DEBIAN_NAME="fonts-nerd-font-${ASSET_NAME%.*}"
