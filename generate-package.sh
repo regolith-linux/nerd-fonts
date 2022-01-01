@@ -30,6 +30,7 @@ setup() {
         mkdir -p $TMP_ASSET_DIR
     fi
 
+    rm -Rf usr
     rm -Rf debian
     mkdir debian
 
@@ -60,11 +61,24 @@ generate_debian_package() {
         # Create install file
         wget -P $TMP_ASSET_DIR "$ASSET_URL"
         mkdir -p "usr/share/fonts/opentype/${ASSET_NAME%.*}"
-        unzip "$TMP_ASSET_DIR/$ASSET_FILENAME" "*.otf" -d "usr/share/fonts/opentype/${ASSET_NAME%.*}/"
+        unzip "$TMP_ASSET_DIR/$ASSET_FILENAME" "*.otf" -d "usr/share/fonts/opentype/${ASSET_NAME%.*}/" -x "*Windows Compatible*" || true
+        mkdir -p "usr/share/fonts/truetype/${ASSET_NAME%.*}"
+        unzip "$TMP_ASSET_DIR/$ASSET_FILENAME" "*.ttf" -d "usr/share/fonts/truetype/${ASSET_NAME%.*}/" -x "*Windows Compatible*" || true
+
+        if [ -n "$(find usr/share/fonts/opentype/${ASSET_NAME%.*} -prune -empty -type d 2>/dev/null)" ]; then
+            rmdir "usr/share/fonts/opentype/${ASSET_NAME%.*}"
+        else
+            echo "usr/share/fonts/opentype/${ASSET_NAME%.*}" >> "debian/$ASSET_DEBIAN_NAME.install"
+        fi
+
+        if [ -n "$(find usr/share/fonts/truetype/${ASSET_NAME%.*} -prune -empty -type d 2>/dev/null)" ]; then
+            rmdir "usr/share/fonts/truetype/${ASSET_NAME%.*}"
+        else
+            echo "usr/share/fonts/truetype/${ASSET_NAME%.*}" >> "debian/$ASSET_DEBIAN_NAME.install"
+        fi
     done
 }
 
 setup
 download_latest_release
-
-write_debian_control_start
+generate_debian_package
