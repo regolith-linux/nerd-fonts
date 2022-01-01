@@ -16,6 +16,10 @@ write_debian_control_start() {
     echo "Standards-Version: 4.1.2" >> debian/control
 }
 
+write_debian_compat() {
+    echo "10" >> debian/compat
+}
+
 write_debian_copyright() {
     echo "Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/" >> debian/copyright
     echo "Upstream-Name: Nerd Fonts" >> debian/copyright
@@ -159,6 +163,7 @@ setup() {
     write_debian_copyright
     write_debian_control_start
     write_debian_rules
+    write_debian_compat
 }
 
 generate_debian_package() {
