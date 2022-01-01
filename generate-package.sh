@@ -148,8 +148,11 @@ write_debian_copyright() {
 }
 
 write_debian_rules() {
+    echo "#!/usr/bin/make -f" >> debian/rules
+    echo "" >> debian/rules
     echo "%:" >> debian/rules
-	echo "    dh \$@" >> debian/rules
+    echo "	dh \$@" >> debian/rules
+    echo "" >> debian/rules
 }
 
 download_latest_release() {
