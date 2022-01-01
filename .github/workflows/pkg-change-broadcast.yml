@@ -2,7 +2,7 @@ name: pkg-change-broadcast
 
 on:
   push:
-    branches: [ main ]
+    branches: [ debian ]
   workflow_dispatch:
 
 jobs:
