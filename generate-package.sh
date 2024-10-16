@@ -180,8 +180,27 @@ generate_debian_package() {
         ASSET_NAME=$(echo $release_asset | jq -r '.name' | awk '{print tolower($0)}')
         ASSET_FILENAME=$(echo $release_asset | jq -r '.name')
         ASSET_URL=$(echo $release_asset | jq -r '.browser_download_url')
+        ASSET_SIZE=$(echo $release_asset | jq -r '.size')
 
-        # FIXME - Need ability to exclude some fonts due to size, eg 'Noto'
+        # Only handle ZIP files
+        if [[ "${ASSET_NAME: -4}" != ".zip" ]]; then
+            continue
+        fi
+
+        # Skip font-patcher
+        if [[ $ASSET_NAME == *"FontPatcher"* ]]; then
+            echo "$ASSET_NAME is not a font, skipping."
+            continue
+        fi
+
+        # Need ability to exclude some fonts due to size, eg 'Noto'
+        # for now go with 150MB limit
+        if [ $ASSET_SIZE -gt 157286400 ]; then
+            echo "!!! SKIPPING $ASSET_NAME due to size (>150MB) !!!"
+            echo "$ASSET_NAME, $ASSET_SIZE" >> skipped.txt
+            continue
+        fi
+
 
         # Append to control file
         ASSET_DEBIAN_NAME="fonts-nerd-font-${ASSET_NAME%.*}"
